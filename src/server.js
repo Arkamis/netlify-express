@@ -1,7 +1,7 @@
 'use strict';
 const express = require('express');
 const serverless = require('serverless-http');
-const generateOrder = require('./handler/generateOrder');
+const performStockUpdate = require("./handler/performStockUpdate");
 const bodyParser = require('body-parser');
 const path = require('path');
 
@@ -12,15 +12,15 @@ app.use(bodyParser.json());
 
 
 
-app.post("/:route", (req, res) => {
+app.post("/performStockUpdate", (req, res) => {
   try {
-    const handler = require(`./handlers/${req.params.route}`);
-    if (!handler) {
-      return res.status(404).json({
-        message: `not found`,
-      });
-    }
-    return handler(req, res);
+    // const handler = require(`./handlers/${req.params.route}`);
+    // if (!handler) {
+    //   return res.status(404).json({
+    //     message: `not found`,
+    //   });
+    // }
+    return performStockUpdate(req, res);
   } catch (e) {
     console.error(e);
     return res.status(500).json({
