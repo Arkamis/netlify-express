@@ -14,7 +14,7 @@ const router = express.Router()
 
 router.get("/:route", (req, res) => {
   try {
-    const handler = require(`./handlers/${req.params.route}`);
+    const handler = require(`./handler/${req.params.route}`);
     if (!handler) {
       return res.status(404).json({
         message: `not found`,
