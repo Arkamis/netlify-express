@@ -1,4 +1,5 @@
 'use strict';
+require('encoding')
 const express = require('express');
 const serverless = require('serverless-http');
 const performStockUpdate = require("./handler/performStockUpdate");
