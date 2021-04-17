@@ -10,17 +10,17 @@ const app = express();
 
 app.use(bodyParser.json());
 
+const router = express.Router()
 
-
-app.post("/performStockUpdate", (req, res) => {
+router.get("/:route", (req, res) => {
   try {
-    // const handler = require(`./handlers/${req.params.route}`);
-    // if (!handler) {
-    //   return res.status(404).json({
-    //     message: `not found`,
-    //   });
-    // }
-    return performStockUpdate(req, res);
+    const handler = require(`./handlers/${req.params.route}`);
+    if (!handler) {
+      return res.status(404).json({
+        message: `not found`,
+      });
+    }
+    return handler(req, res);
   } catch (e) {
     console.error(e);
     return res.status(500).json({
@@ -29,6 +29,7 @@ app.post("/performStockUpdate", (req, res) => {
   }
 });
 
+router.post("/performStockUpdate", performStockUpdate);
 
 app.use('/.netlify/functions/server', router);  // path must route to lambda
 app.use('/', (req, res) => res.sendFile(path.join(__dirname, '../index.html')));
