@@ -68,7 +68,7 @@ const retriveInventoryId = async (detalle_orden, destination_zipcode, id_cliente
     }
   }
   `;
-  const detalle_products_with_inventories_by_pk = detalle_orden.map(detalle => {
+  const detalle_products_with_inventories_by_pk = await Promise.all(detalle_orden.map( async detalle => {
     
     const { cantidad, id_producto } = detalle;
 
@@ -86,7 +86,7 @@ const retriveInventoryId = async (detalle_orden, destination_zipcode, id_cliente
     if (data) {
       return { inventory_by_pk, ...detalle }
     }
-  });
+  }));
 
   return detalle_products_with_inventories_by_pk;
 }
